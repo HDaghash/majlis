@@ -3,10 +3,10 @@ import { CommonModule } from '@angular/common';
 import { ServicesComponent } from './components/services/services.component';
 import { MajlisListComponent } from './components/majlis-list/majlis-list.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
-import { MainLayoutComponent } from '../layout/main-layout/main-layout.component';
+import { PublicRoutingModule } from './majlis.routing';
 
 @NgModule({
-  declarations: [],
-  imports: [CommonModule, ServicesComponent, MajlisListComponent, DashboardComponent, MainLayoutComponent]
+  declarations: [ServicesComponent, MajlisListComponent, DashboardComponent],
+  imports: [CommonModule, PublicRoutingModule]
 })
 export class MajlisModule {}

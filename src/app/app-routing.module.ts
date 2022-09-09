@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { AppComponent } from './app.component';
-
+import { MainLayoutComponent } from './layout/main-layout/main-layout.component';
 const routes: Routes = [
   {
     path: '',
@@ -9,14 +8,20 @@ const routes: Routes = [
     pathMatch: 'full'
   },
   {
-    path: 'majlis',
-    component: AppComponent,
-    pathMatch: 'full'
-  },
+    path: '',
+    canActivateChild: [],
+    component: MainLayoutComponent,
+    children: [
+      {
+        path: '',
+        loadChildren: () => import('./modules/majlis/majlis.module').then(m => m.MajlisModule)
+      }
+    ]
+  }
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-exports: [RouterModule]
+  exports: [RouterModule]
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}
