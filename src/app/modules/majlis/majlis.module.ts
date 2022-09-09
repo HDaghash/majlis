@@ -1,12 +1,12 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { ServicesComponent } from './components/services/services.component';
 import { MajlisListComponent } from './components/majlis-list/majlis-list.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
-import { PublicRoutingModule } from './majlis.routing';
+import { MajlisRoutingModule } from './majlis.routing';
+import { SharedModule } from '../shared/shared.module';
 
 @NgModule({
   declarations: [ServicesComponent, MajlisListComponent, DashboardComponent],
-  imports: [CommonModule, PublicRoutingModule]
+  imports: [MajlisRoutingModule, SharedModule]
 })
 export class MajlisModule {}

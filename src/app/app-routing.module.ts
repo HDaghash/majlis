@@ -9,7 +9,6 @@ const routes: Routes = [
   },
   {
     path: '',
-    canActivateChild: [],
     component: MainLayoutComponent,
     children: [
       {
