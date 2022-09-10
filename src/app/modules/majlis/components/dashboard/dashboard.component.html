@@ -1,1 +1,41 @@
-<p>dashboard works!</p>
+<nz-row nzType="flex" nzJustify="center" class="sticky">
+  <nz-col nzSpan="24">
+    <nz-card>
+      <nz-statistic
+        [nzValue]="(items.length | number)!"
+        [nzTitle]="'مجموع المجالس'"
+        [nzPrefix]="prefix"
+        [nzValueStyle]="{ color: '#3F8600' }"
+      ></nz-statistic>
+      <ng-template #prefix><span nz-icon nzType="arrow-up"></span></ng-template>
+    </nz-card>
+  </nz-col>
+  <nz-col nzSpan="24">
+    <nz-card nzTitle="التوزيع حسب المدن">
+      <canvas
+        baseChart
+        [type]="'pie'"
+        [datasets]="citiesData"
+        [labels]="citiesLabels"
+        [options]="pieChartOptions"
+        [plugins]="pieChartPlugins"
+        [legend]="pieChartLegend"
+      >
+      </canvas>
+    </nz-card>
+  </nz-col>
+  <nz-col nzSpan="24">
+    <nz-card nzTitle="التوزيع حسب المنطقة">
+      <canvas
+        baseChart
+        [type]="'pie'"
+        [datasets]="districtsData"
+        [labels]="districtsLabels"
+        [options]="pieChartOptions"
+        [plugins]="pieChartPlugins"
+        [legend]="pieChartLegend"
+      >
+      </canvas>
+    </nz-card>
+  </nz-col>
+</nz-row>

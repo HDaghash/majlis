@@ -15,7 +15,7 @@ export class MajlisListComponent implements OnInit {
   showForm = new Subject<IMajlisForm | null>();
   items: IMajlisForm[] = [];
   displayItems: IMajlisForm[] = [];
-  pageSize = 3;
+  pageSize = 6;
   currentPage = 1;
 
   constructor(private message: NzMessageService) {}

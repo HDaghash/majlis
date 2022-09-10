@@ -1,11 +1,11 @@
 <nz-row nzType="flex" nzJustify="space-between" nzGutter="20">
-  <nz-col [nzSm]="24" [nzMd]="20" [nzLg]="20">
+  <nz-col [nzSm]="24" [nzMd]="18" [nzLg]="18">
     <app-services (onAction)="checkAction($event)"></app-services>
 
     <h2>قائمة المجالس</h2>
 
     <nz-row nzType="flex" nzJustify="start" nzGutter="10">
-      <nz-col [nzXs]="24" [nzSm]="24" [nzMd]="12" [nzLg]="7" *ngFor="let item of displayItems">
+      <nz-col [nzXs]="24" [nzSm]="24" [nzMd]="12" [nzLg]="8" *ngFor="let item of displayItems">
         <nz-card>
           <figure>
             <div class="card-image-wrapper">
@@ -85,7 +85,7 @@
     </nz-row>
     <app-majlis-form [onShow]="showForm" (onSubmit)="formSubmitted($event)"></app-majlis-form>
   </nz-col>
-  <nz-col [nzSm]="24" [nzMd]="4" [nzLg]="4">
-    <app-dashboard></app-dashboard>
+  <nz-col [nzSm]="24" [nzMd]="6" [nzLg]="6">
+    <app-dashboard [items]="items"></app-dashboard>
   </nz-col>
 </nz-row>
