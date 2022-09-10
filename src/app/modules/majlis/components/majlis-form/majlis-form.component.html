@@ -77,8 +77,8 @@
               >
                 <nz-option
                   *ngFor="let option of cities"
-                  [nzLabel]="option"
-                  [nzValue]="option"
+                  [nzLabel]="option.name"
+                  [nzValue]="option.id"
                   id="city"
                 ></nz-option>
               </nz-select>
@@ -98,8 +98,8 @@
               >
                 <nz-option
                   *ngFor="let option of districts"
-                  [nzLabel]="option"
-                  [nzValue]="option"
+                  [nzLabel]="option.name"
+                  [nzValue]="option.id"
                   id="district"
                 ></nz-option>
               </nz-select>

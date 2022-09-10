@@ -1,12 +1,12 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { Subject, Subscription } from 'rxjs';
-import { IMajlisForm } from './types';
+import { ILookupItem, IMajlisForm } from './types';
 import { FormBuilder, Validators } from '@angular/forms';
 import { REGEX } from 'app/modules/shared/regex';
 import { Observable, Observer } from 'rxjs';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { NzUploadFile } from 'ng-zorro-antd/upload';
-import { MAX_IMAGE_LIMIT, INVALID_IMAGE_SIZE, MOC_UPLOAD_SERVICE } from './config';
+import { MAX_IMAGE_LIMIT, INVALID_IMAGE_SIZE, MOC_UPLOAD_SERVICE, CITIES, DISTRICTS } from './config';
 import { FormService } from 'app/services/forms.service';
 
 @Component({
@@ -16,11 +16,13 @@ import { FormService } from 'app/services/forms.service';
 })
 export class MajlisFormComponent implements OnInit, OnDestroy {
   @Input() onShow: Subject<IMajlisForm | null> | undefined;
+  @Output() onSubmit = new EventEmitter();
+
   readonly MOC_UPLOAD_SERVICE = MOC_UPLOAD_SERVICE;
   showForm: boolean = false;
   subscription = new Subscription();
-  cities: string[] = [];
-  districts: string[] = [];
+  cities = [...CITIES];
+  districts: ILookupItem[] = [];
   isUploading: boolean = false;
   fakeSubscription = new Subscription();
 
@@ -37,6 +39,16 @@ export class MajlisFormComponent implements OnInit, OnDestroy {
     this.subscription.add(
       this.onShow?.subscribe(() => {
         this.showForm = true;
+      })
+    );
+
+    this.subscription.add(
+      this.form.controls.city.valueChanges.subscribe(id => {
+        const target = DISTRICTS.find(item => item.cityId === id);
+        if (target) {
+          this.form.controls.district.reset();
+          this.districts = [...target.items];
+        }
       })
     );
   }
@@ -81,7 +93,8 @@ export class MajlisFormComponent implements OnInit, OnDestroy {
 
   submit() {
     if (this.form.valid) {
-      console.log(this.form.value);
+      this.onSubmit.emit(this.form.value);
+      this.close();
     } else {
       this.formService.updateFormValidity(this.form.controls);
     }
