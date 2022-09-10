@@ -13,11 +13,13 @@ export class MajlisListComponent implements OnInit {
   readonly DISTRICTS = DISTRICTS;
   showForm = new Subject<IMajlisForm | null>();
   items: IMajlisForm[] = [];
-
+  displayItems: IMajlisForm[] = [];
+  pageSize = 3;
   constructor() {}
 
   ngOnInit() {
     this.items = [...DEMO_DATA];
+    this.displayItems = this.items.slice(0, this.pageSize);
   }
 
   checkAction(serviceName: string) {
@@ -30,6 +32,19 @@ export class MajlisListComponent implements OnInit {
 
   formSubmitted(event: IMajlisForm) {
     console.log(event);
-    this.items = [...this.items, event];
+    this.items = [...this.items, { id: this.items.length + 1, ...event }];
+  }
+
+  delete(id: number | undefined) {
+    if (id) {
+      const newItems = this.items.filter(item => item.id !== id);
+      this.items = [...newItems];
+      this.displayItems = this.items.slice(0, this.pageSize);
+    }
+  }
+
+  onPageChange(page: number) {
+    const index = page !== 1 ? page * this.pageSize - this.pageSize : 0;
+    this.displayItems = this.items.slice(index, this.pageSize * page);
   }
 }

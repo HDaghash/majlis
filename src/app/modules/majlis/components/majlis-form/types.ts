@@ -1,4 +1,5 @@
 export interface IMajlisForm {
+  id?: number;
   name: string;
   city: number;
   district: number;

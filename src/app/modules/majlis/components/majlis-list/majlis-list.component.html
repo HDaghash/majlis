@@ -1,58 +1,86 @@
-<app-services (onAction)="checkAction($event)"></app-services>
+<nz-row nzType="flex" nzJustify="space-between" nzGutter="20">
+  <nz-col [nzSm]="24" [nzMd]="20" [nzLg]="20">
+    <app-services (onAction)="checkAction($event)"></app-services>
 
-<h2>قائمة المجالس</h2>
-<nz-row nzType="flex" nzJustify="start" nzGutter="20">
-  <nz-col [nzXs]="24" [nzSm]="24" [nzMd]="12" [nzLg]="7" *ngFor="let item of items">
-    <nz-card>
-      <figure>
-        <div class="card-image-wrapper">
-          <div
-            class="card-image"
-            [ngStyle]="{ 'background-image': 'url(' + item.image + ')' }"
-          ></div>
-        </div>
-        <div class="high-demand" nz-tooltip nzTooltipTitle="طلب عالي">
-          <span nz-icon nzType="fire" nzTheme="outline"></span>
-        </div>
-        <figcaption>
-          <h3>{{ item.name }}</h3>
-        </figcaption>
-      </figure>
-      <nz-row nzType="flex" nzJustify="start" nzGutter="20">
-        <nz-col>
-          <nz-tag nzColor="#FCEDDA">
-            <span nz-icon nzType="environment" nzTheme="outline"></span>
-            <span
-              >{{ item.city | lookupItem: CITIES }} , {{ item.district | lookupItem: DISTRICTS }}
-            </span>
-          </nz-tag>
-        </nz-col>
-        <nz-col>
-          <nz-tag nzColor="#FCEDDA">
-            <span
-              nz-icon
-              [nzType]="item.status ? 'check-circle' : 'close-circle'"
-              nzTheme="outline"
-            ></span>
-            <span *ngIf="item.status">متوفر </span>
-            <span *ngIf="!item.status">غير متوفر</span>
-          </nz-tag>
-        </nz-col>
-      </nz-row>
-      <nz-row class="card-controls" nzType="flex" nzJustify="space-between" nzGutter="20">
-        <nz-col nzSpan="12">
-          <button nz-button nzBlock nzType="primary">
-            <span nz-icon nzType="edit" nzTheme="outline"></span>تعديل
-          </button>
-        </nz-col>
-        <nz-col nzSpan="12">
-          <button nz-button nzBlock nzDanger nzType="primary">
-            <span nz-icon nzType="delete" nzTheme="outline"></span>حذف
-          </button>
-        </nz-col>
-      </nz-row>
-    </nz-card>
+    <h2>قائمة المجالس</h2>
+
+    <nz-row nzType="flex" nzJustify="start" nzGutter="10">
+      <nz-col [nzXs]="24" [nzSm]="24" [nzMd]="12" [nzLg]="7" *ngFor="let item of displayItems">
+        <nz-card>
+          <figure>
+            <div class="card-image-wrapper">
+              <div
+                class="card-image"
+                [ngStyle]="{ 'background-image': 'url(' + item.image + ')' }"
+              ></div>
+            </div>
+            <div class="high-demand" nz-tooltip nzTooltipTitle="طلب عالي">
+              <span nz-icon nzType="fire" nzTheme="outline"></span>
+            </div>
+            <figcaption>
+              <h3>{{ item.name }}</h3>
+            </figcaption>
+          </figure>
+          <nz-row nzType="flex" nzJustify="start" nzGutter="20">
+            <nz-col>
+              <nz-tag nzColor="#FCEDDA">
+                <span nz-icon nzType="environment" nzTheme="outline"></span>
+                <span
+                  >{{ item.city | lookupItem: CITIES }} ,
+                  {{ item.district | lookupItem: DISTRICTS }}
+                </span>
+              </nz-tag>
+            </nz-col>
+            <nz-col>
+              <nz-tag nzColor="#FCEDDA">
+                <span
+                  nz-icon
+                  [nzType]="item.status ? 'check-circle' : 'close-circle'"
+                  nzTheme="outline"
+                ></span>
+                <span *ngIf="item.status">متوفر </span>
+                <span *ngIf="!item.status">غير متوفر</span>
+              </nz-tag>
+            </nz-col>
+          </nz-row>
+          <nz-row class="card-controls" nzType="flex" nzJustify="space-between" nzGutter="20">
+            <nz-col nzSpan="12">
+              <button nz-button nzBlock nzType="primary">
+                <span nz-icon nzType="edit" nzTheme="outline"></span>تعديل
+              </button>
+            </nz-col>
+            <nz-col nzSpan="12">
+              <button
+                nz-button
+                nzBlock
+                nzDanger
+                nzType="primary"
+                nz-popconfirm
+                nzPopconfirmTitle="هل انت متأكد"
+                (nzOnConfirm)="delete(item.id)"
+                nzOkText="نعم"
+                nzCancelText="لا"
+              >
+                <span nz-icon nzType="delete" nzTheme="outline"></span>حذف
+              </button>
+            </nz-col>
+          </nz-row>
+        </nz-card>
+      </nz-col>
+    </nz-row>
+    <nz-row nzType="flex" nzJustify="start">
+      <nz-col>
+        <nz-pagination
+          [nzPageSize]="pageSize"
+          [nzPageIndex]="1"
+          [nzTotal]="items.length"
+          (nzPageIndexChange)="onPageChange($event)"
+        ></nz-pagination>
+      </nz-col>
+    </nz-row>
+    <app-majlis-form [onShow]="showForm" (onSubmit)="formSubmitted($event)"></app-majlis-form>
+  </nz-col>
+  <nz-col [nzSm]="24" [nzMd]="4" [nzLg]="4">
+    <app-dashboard></app-dashboard>
   </nz-col>
 </nz-row>
-
-<app-majlis-form [onShow]="showForm" (onSubmit)="formSubmitted($event)"></app-majlis-form>
