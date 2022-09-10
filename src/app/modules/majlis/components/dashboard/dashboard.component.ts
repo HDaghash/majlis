@@ -16,7 +16,7 @@ export class DashboardComponent implements OnChanges {
   districtsLabels: string[] = [];
   citiesData: { data: number[] }[] = [];
   districtsData: { data: number[] }[] = [];
-  pieChartLegend = false;
+  pieChartLegend = true;
   pieChartPlugins = [];
   pieChartOptions: ChartOptions<'pie'> = {
     responsive: true
