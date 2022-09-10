@@ -1,4 +1,4 @@
-<app-services></app-services>
+<app-services (onAction)="checkAction($event)"></app-services>
 
 <h2>قائمة المجالس</h2>
 <nz-row nzType="flex" nzJustify="start" nzGutter="20">
@@ -47,3 +47,4 @@
     </nz-card>
   </nz-col>
 </nz-row>
+<app-majlis-form [onShow]="showForm"></app-majlis-form>

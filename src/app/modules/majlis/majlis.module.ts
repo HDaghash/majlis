@@ -4,9 +4,10 @@ import { MajlisListComponent } from './components/majlis-list/majlis-list.compon
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { MajlisRoutingModule } from './majlis.routing';
 import { SharedModule } from '../shared/shared.module';
+import { MajlisFormComponent } from './components/majlis-form/majlis-form.component';
 
 @NgModule({
-  declarations: [ServicesComponent, MajlisListComponent, DashboardComponent],
+  declarations: [ServicesComponent, MajlisListComponent, DashboardComponent, MajlisFormComponent],
   imports: [MajlisRoutingModule, SharedModule]
 })
 export class MajlisModule {}

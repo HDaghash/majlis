@@ -1,0 +1,103 @@
+<nz-modal [nzWidth]="800" [nzVisible]="showForm" nzTitle="إضافة مجلس جديد" (nzOnCancel)="close()">
+  <div *nzModalContent>
+    <form nz-form nzLayout="vertical" [formGroup]="form">
+      <nz-row nzType="flex" nzJustify="space-between" nzGutter="20">
+        <nz-col nzSpan="11">
+          <nz-form-item>
+            <nz-form-label nzFor="image">صورة المجلس</nz-form-label>
+            <nz-form-control nzErrorTip="الحقل صورة المجلس  مطلوب">
+              <nz-upload
+                [nzAction]="MOC_UPLOAD_SERVICE"
+                nzAccept="image/*"
+                nzName="image"
+                nzListType="picture-card"
+                [nzShowUploadList]="false"
+                [nzBeforeUpload]="beforeUpload"
+                (nzChange)="fileChange($event)"
+              >
+                <ng-container *ngIf="!form.controls.image.value">
+                  <span
+                    class="upload-icon"
+                    nz-icon
+                    [nzType]="isUploading ? 'loading' : 'plus'"
+                  ></span>
+                  <div class="ant-upload-text">إختيار الصورة</div>
+                </ng-container>
+                <img
+                  *ngIf="form.controls.image.value"
+                  [src]="form.controls.image.value"
+                  style="height: 100%"
+                />
+              </nz-upload>
+            </nz-form-control>
+          </nz-form-item>
+        </nz-col>
+        <nz-col nzSpan="11">
+          <nz-form-item>
+            <nz-form-label nzFor="status">حالة المجلس</nz-form-label>
+            <nz-form-control
+              nzErrorTip="الحقل حالة المجلس مطلوب"
+              nzExtra="قم بتحديد حالة المجلس فعال وغير فعال"
+            >
+              <nz-switch formControlName="status" id="status"></nz-switch>
+            </nz-form-control>
+          </nz-form-item>
+        </nz-col>
+        <nz-col nzSpan="8">
+          <nz-form-item>
+            <nz-form-label nzFor="name">إسم المجلس</nz-form-label>
+            <nz-form-control nzErrorTip="الحقل إسم المجلس مطلوب">
+              <input formControlName="name" nz-input name="name" type="text" id="name" />
+            </nz-form-control>
+          </nz-form-item>
+        </nz-col>
+
+        <nz-col nzSpan="8">
+          <nz-form-item>
+            <nz-form-label nzFor="city">المدينة</nz-form-label>
+            <nz-form-control nzErrorTip="الحقل المدينة مطلوب">
+              <nz-select
+                nzShowSearch
+                nzPlaceHolder="المدينة"
+                nzNotFoundContent="لايوجد بيانات"
+                formControlName="city"
+              >
+                <nz-option
+                  *ngFor="let option of cities"
+                  [nzLabel]="option"
+                  [nzValue]="option"
+                  id="city"
+                ></nz-option>
+              </nz-select>
+            </nz-form-control>
+          </nz-form-item>
+        </nz-col>
+
+        <nz-col nzSpan="8">
+          <nz-form-item>
+            <nz-form-label nzFor="district">المنطقة</nz-form-label>
+            <nz-form-control nzErrorTip="الحقل المنطقة مطلوب">
+              <nz-select
+                nzShowSearch
+                nzPlaceHolder="المنطقة"
+                nzNotFoundContent="لايوجد بيانات"
+                formControlName="district"
+              >
+                <nz-option
+                  *ngFor="let option of districts"
+                  [nzLabel]="option"
+                  [nzValue]="option"
+                  id="district"
+                ></nz-option>
+              </nz-select>
+            </nz-form-control>
+          </nz-form-item>
+        </nz-col>
+      </nz-row>
+    </form>
+  </div>
+  <div *nzModalFooter>
+    <button nz-button nzDanger nzType="default" (click)="close()">إلغاء</button>
+    <button nz-button nzType="primary">حفظ</button>
+  </div>
+</nz-modal>
