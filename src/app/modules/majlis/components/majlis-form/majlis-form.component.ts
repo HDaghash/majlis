@@ -25,8 +25,9 @@ export class MajlisFormComponent implements OnInit, OnDestroy {
   districts: ILookupItem[] = [];
   isUploading: boolean = false;
   fakeSubscription = new Subscription();
-
+  formType: 'edit' | 'add' = 'add';
   form = this.formBuilder.group({
+    id: [null],
     name: [null, [Validators.required, Validators.pattern(REGEX.NOT_ONLY_SPACE)]],
     city: [null, [Validators.required, Validators.pattern(REGEX.NOT_ONLY_SPACE)]],
     district: [null, [Validators.required, Validators.pattern(REGEX.NOT_ONLY_SPACE)]],
@@ -37,7 +38,12 @@ export class MajlisFormComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.subscription.add(
-      this.onShow?.subscribe(() => {
+      this.onShow?.subscribe(data => {
+        this.formType = data ? 'edit' : 'add';
+        if (data) {
+          this.formService.bindData(this.form.controls, data);
+        }
+
         this.showForm = true;
       })
     );
@@ -93,7 +99,7 @@ export class MajlisFormComponent implements OnInit, OnDestroy {
 
   submit() {
     if (this.form.valid) {
-      this.onSubmit.emit(this.form.value);
+      this.onSubmit.emit({ formType: this.formType, ...this.form.value });
       this.close();
     } else {
       this.formService.updateFormValidity(this.form.controls);
@@ -101,7 +107,7 @@ export class MajlisFormComponent implements OnInit, OnDestroy {
   }
 
   close() {
-    this.form.reset();
+    this.form.reset({ status: true });
     this.showForm = false;
   }
   ngOnDestroy() {

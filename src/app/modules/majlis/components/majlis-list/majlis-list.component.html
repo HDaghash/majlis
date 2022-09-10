@@ -45,7 +45,7 @@
           </nz-row>
           <nz-row class="card-controls" nzType="flex" nzJustify="space-between" nzGutter="20">
             <nz-col nzSpan="12">
-              <button nz-button nzBlock nzType="primary">
+              <button nz-button nzBlock nzType="primary" (click)="edit(item.id)">
                 <span nz-icon nzType="edit" nzTheme="outline"></span>تعديل
               </button>
             </nz-col>
@@ -72,10 +72,15 @@
       <nz-col>
         <nz-pagination
           [nzPageSize]="pageSize"
-          [nzPageIndex]="1"
+          [(nzPageIndex)]="currentPage"
           [nzTotal]="items.length"
           (nzPageIndexChange)="onPageChange($event)"
         ></nz-pagination>
+      </nz-col>
+    </nz-row>
+    <nz-row nzType="flex" nzJustify="center" *ngIf="!items.length">
+      <nz-col>
+        <nz-empty nzNotFoundContent="لا يوجد بيانات"></nz-empty>
       </nz-col>
     </nz-row>
     <app-majlis-form [onShow]="showForm" (onSubmit)="formSubmitted($event)"></app-majlis-form>

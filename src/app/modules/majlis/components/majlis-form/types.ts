@@ -1,4 +1,5 @@
 export interface IMajlisForm {
+  formType?: 'add' | 'edit';
   id?: number;
   name: string;
   city: number;

@@ -1,7 +1,7 @@
 <nz-modal
   [nzWidth]="800"
   [nzVisible]="showForm"
-  nzTitle="إضافة مجلس جديد"
+  [nzTitle]="formType === 'add' ? 'إضافة مجلس جديد' : 'تعديل بيانات المجلس'"
   (nzOnCancel)="close()"
   [nzFooter]="null"
 >

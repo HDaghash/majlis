@@ -19,6 +19,7 @@ import { FormService } from 'app/services/forms.service';
 import { LookupItemPipe } from 'app/pipes/lookup-item.pipe';
 import { NzPaginationModule } from 'ng-zorro-antd/pagination';
 import { NzPopconfirmModule } from 'ng-zorro-antd/popconfirm';
+import { NzEmptyModule } from 'ng-zorro-antd/empty';
 
 @NgModule({
   declarations: [LookupItemPipe],
@@ -40,7 +41,8 @@ import { NzPopconfirmModule } from 'ng-zorro-antd/popconfirm';
     NzUploadModule,
     NzDividerModule,
     NzPaginationModule,
-    NzPopconfirmModule
+    NzPopconfirmModule,
+    NzEmptyModule
   ],
   exports: [
     CommonModule,
@@ -61,7 +63,8 @@ import { NzPopconfirmModule } from 'ng-zorro-antd/popconfirm';
     NzDividerModule,
     LookupItemPipe,
     NzPaginationModule,
-    NzPopconfirmModule
+    NzPopconfirmModule,
+    NzEmptyModule
   ],
   providers: [FormBuilder, NzMessageService, FormService, LookupItemPipe]
 })
