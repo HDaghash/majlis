@@ -1,11 +1,17 @@
-<nz-modal [nzWidth]="800" [nzVisible]="showForm" nzTitle="إضافة مجلس جديد" (nzOnCancel)="close()">
+<nz-modal
+  [nzWidth]="800"
+  [nzVisible]="showForm"
+  nzTitle="إضافة مجلس جديد"
+  (nzOnCancel)="close()"
+  [nzFooter]="null"
+>
   <div *nzModalContent>
-    <form nz-form nzLayout="vertical" [formGroup]="form">
+    <form nz-form nzLayout="vertical" [formGroup]="form" (ngSubmit)="submit()">
       <nz-row nzType="flex" nzJustify="space-between" nzGutter="20">
         <nz-col nzSpan="11">
           <nz-form-item>
-            <nz-form-label nzFor="image">صورة المجلس</nz-form-label>
-            <nz-form-control nzErrorTip="الحقل صورة المجلس  مطلوب">
+            <nz-form-label nzFor="image" nzRequired>صورة المجلس</nz-form-label>
+            <nz-form-control>
               <nz-upload
                 [nzAction]="MOC_UPLOAD_SERVICE"
                 nzAccept="image/*"
@@ -24,17 +30,24 @@
                   <div class="ant-upload-text">إختيار الصورة</div>
                 </ng-container>
                 <img
+                  class="uploaded-image"
                   *ngIf="form.controls.image.value"
                   [src]="form.controls.image.value"
-                  style="height: 100%"
                 />
               </nz-upload>
+              <ng-container
+                *ngIf="form.get('image')?.dirty && form.get('image')?.hasError('required')"
+              >
+                <span class="custom-error">
+                  الحقل صورة المجلس مطلوب
+                </span>
+              </ng-container>
             </nz-form-control>
           </nz-form-item>
         </nz-col>
         <nz-col nzSpan="11">
           <nz-form-item>
-            <nz-form-label nzFor="status">حالة المجلس</nz-form-label>
+            <nz-form-label nzRequired nzFor="status">حالة المجلس</nz-form-label>
             <nz-form-control
               nzErrorTip="الحقل حالة المجلس مطلوب"
               nzExtra="قم بتحديد حالة المجلس فعال وغير فعال"
@@ -45,7 +58,7 @@
         </nz-col>
         <nz-col nzSpan="8">
           <nz-form-item>
-            <nz-form-label nzFor="name">إسم المجلس</nz-form-label>
+            <nz-form-label nzRequired nzFor="name">إسم المجلس</nz-form-label>
             <nz-form-control nzErrorTip="الحقل إسم المجلس مطلوب">
               <input formControlName="name" nz-input name="name" type="text" id="name" />
             </nz-form-control>
@@ -54,7 +67,7 @@
 
         <nz-col nzSpan="8">
           <nz-form-item>
-            <nz-form-label nzFor="city">المدينة</nz-form-label>
+            <nz-form-label nzRequired nzFor="city">المدينة</nz-form-label>
             <nz-form-control nzErrorTip="الحقل المدينة مطلوب">
               <nz-select
                 nzShowSearch
@@ -75,7 +88,7 @@
 
         <nz-col nzSpan="8">
           <nz-form-item>
-            <nz-form-label nzFor="district">المنطقة</nz-form-label>
+            <nz-form-label nzRequired nzFor="district">المنطقة</nz-form-label>
             <nz-form-control nzErrorTip="الحقل المنطقة مطلوب">
               <nz-select
                 nzShowSearch
@@ -94,10 +107,15 @@
           </nz-form-item>
         </nz-col>
       </nz-row>
+      <nz-divider></nz-divider>
+      <nz-row nzType="flex" nzJustify="end" nzGutter="20">
+        <nz-col>
+          <button nz-button nzDanger nzType="default" (click)="close()">إلغاء</button>
+        </nz-col>
+        <nz-col>
+          <button nz-button type="submit" nzType="primary">حفظ</button>
+        </nz-col>
+      </nz-row>
     </form>
-  </div>
-  <div *nzModalFooter>
-    <button nz-button nzDanger nzType="default" (click)="close()">إلغاء</button>
-    <button nz-button nzType="primary">حفظ</button>
   </div>
 </nz-modal>

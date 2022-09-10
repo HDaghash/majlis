@@ -7,7 +7,7 @@ import { Observable, Observer } from 'rxjs';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { NzUploadFile } from 'ng-zorro-antd/upload';
 import { MAX_IMAGE_LIMIT, INVALID_IMAGE_SIZE, MOC_UPLOAD_SERVICE } from './config';
-import { HttpClient } from '@angular/common/http';
+import { FormService } from 'app/services/forms.service';
 
 @Component({
   selector: 'app-majlis-form',
@@ -28,10 +28,10 @@ export class MajlisFormComponent implements OnInit, OnDestroy {
     name: [null, [Validators.required, Validators.pattern(REGEX.NOT_ONLY_SPACE)]],
     city: [null, [Validators.required, Validators.pattern(REGEX.NOT_ONLY_SPACE)]],
     district: [null, [Validators.required, Validators.pattern(REGEX.NOT_ONLY_SPACE)]],
-    status: [null, [Validators.required, Validators.pattern(REGEX.NOT_ONLY_SPACE)]],
+    status: [true, [Validators.required, Validators.pattern(REGEX.NOT_ONLY_SPACE)]],
     image: ['', [Validators.required, Validators.pattern(REGEX.NOT_ONLY_SPACE)]]
   });
-  constructor(private formBuilder: FormBuilder, private msg: NzMessageService, private http: HttpClient) {}
+  constructor(private formBuilder: FormBuilder, private msg: NzMessageService, private formService: FormService) {}
 
   ngOnInit(): void {
     this.subscription.add(
@@ -39,10 +39,6 @@ export class MajlisFormComponent implements OnInit, OnDestroy {
         this.showForm = true;
       })
     );
-  }
-
-  close() {
-    this.showForm = false;
   }
 
   beforeUpload = (file: NzUploadFile): Observable<boolean> =>
@@ -76,13 +72,25 @@ export class MajlisFormComponent implements OnInit, OnDestroy {
         });
         break;
       case 'error':
-        this.msg.error('Network error');
+        this.msg.error('Upload Api error');
         this.isUploading = false;
         this.form.controls.image.setValue(null);
         break;
     }
   }
 
+  submit() {
+    if (this.form.valid) {
+      console.log(this.form.value);
+    } else {
+      this.formService.updateFormValidity(this.form.controls);
+    }
+  }
+
+  close() {
+    this.form.reset();
+    this.showForm = false;
+  }
   ngOnDestroy() {
     this.subscription?.unsubscribe();
   }
