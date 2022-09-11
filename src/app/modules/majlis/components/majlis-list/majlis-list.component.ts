@@ -2,8 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { Subject } from 'rxjs';
 import { IFilter, IMajlisForm } from '../majlis-form/types';
 import { CITIES, DISTRICTS } from '../majlis-form/config';
-import { DEMO_DATA } from './demo-data';
 import { NzMessageService } from 'ng-zorro-antd/message';
+import { DEMO_DATA } from '../../../../../assets/demo-data';
+
 @Component({
   selector: 'app-majlis-list',
   templateUrl: './majlis-list.component.html',

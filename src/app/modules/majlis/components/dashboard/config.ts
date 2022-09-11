@@ -6,3 +6,5 @@ export const HOVER_CHART_COLORS: string[] = [
   'rgba(151, 7, 71, 0.6)',
   'rgba(254, 244, 232, 0.6)'
 ];
+
+export const STATUS_LEGEND = ['متوفر', 'غيرمتوفر'];

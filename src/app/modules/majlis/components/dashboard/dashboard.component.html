@@ -24,12 +24,12 @@
     </nz-card>
   </nz-col>
   <nz-col nzSpan="24">
-    <nz-card nzTitle="التوزيع حسب المنطقة">
+    <nz-card nzTitle="التوزيع حسب الحالة">
       <canvas
         baseChart
         [type]="'pie'"
-        [datasets]="districtsData"
-        [labels]="districtsLabels"
+        [datasets]="statusData"
+        [labels]="statusLabels"
         [options]="pieChartOptions"
         [legend]="pieChartLegend"
       >

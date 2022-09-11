@@ -3,7 +3,7 @@
   "compileOnSave": false,
   "compilerOptions": {
     "baseUrl": "src",
-    "paths": { "app/*": ["app/*"], "assets": ["src/assets"], "assets/*": ["src/assets/*"] },
+    "paths": { "app/*": ["app/*"], "assets/*": ["src/assets/*"] },
     "outDir": "./dist/out-tsc",
     "forceConsistentCasingInFileNames": true,
     "strict": true,
