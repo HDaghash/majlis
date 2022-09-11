@@ -17,3 +17,9 @@ export interface INestedLookupItem {
   cityId: number;
   items: ILookupItem[];
 }
+
+export interface IFilter {
+  city: number;
+  district: number;
+  status: boolean;
+}

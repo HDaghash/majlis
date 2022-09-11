@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Subject } from 'rxjs';
-import { IMajlisForm } from '../majlis-form/types';
+import { IFilter, IMajlisForm } from '../majlis-form/types';
 import { CITIES, DISTRICTS } from '../majlis-form/config';
 import { DEMO_DATA } from './demo-data';
 import { NzMessageService } from 'ng-zorro-antd/message';
@@ -38,11 +38,13 @@ export class MajlisListComponent implements OnInit {
 
     if (formType === 'add') {
       this.items = [...this.items, { ...rest, id: this.items.length + 1 }];
+      this.message.success('تمت الإضافة بنجاح');
     }
 
     if (formType === 'edit') {
       const others = this.items.filter(item => item.id !== event.id);
       this.items = [...others, rest].sort((a, b) => (a.id || 0) - (b.id || 0));
+      this.message.success('تم التعديل بنجاح');
     }
 
     this.onPageChange(1);
@@ -64,6 +66,18 @@ export class MajlisListComponent implements OnInit {
         this.showForm.next(target);
       }
     }
+  }
+
+  search(data: IFilter) {
+    const { city, district, status } = data;
+    this.displayItems = this.items.filter(item => {
+      return (item.city === city || !city) && (item.district === district || !district) && item.status === status;
+    });
+  }
+
+  resetFilters() {
+    this.displayItems = [...this.items];
+    this.onPageChange(1);
   }
 
   onPageChange(page: number) {

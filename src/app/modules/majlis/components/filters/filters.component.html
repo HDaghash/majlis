@@ -1,0 +1,69 @@
+<nz-card>
+  <h3>البحث</h3>
+
+  <form nz-form nzLayout="vertical" [formGroup]="form" (ngSubmit)="submit()">
+    <nz-row nzType="flex" nzJustify="start" nzGutter="10" nzAlign="middle">
+      <nz-col nzSpan="4">
+        <nz-form-item>
+          <nz-form-label nzRequired nzFor="city">المدينة</nz-form-label>
+          <nz-form-control nzErrorTip="الحقل المدينة مطلوب">
+            <nz-select
+              nzShowSearch
+              nzPlaceHolder="المدينة"
+              nzNotFoundContent="لايوجد بيانات"
+              formControlName="city"
+            >
+              <nz-option
+                *ngFor="let option of cities"
+                [nzLabel]="option.name"
+                [nzValue]="option.id"
+                id="city"
+              ></nz-option>
+            </nz-select>
+          </nz-form-control>
+        </nz-form-item>
+      </nz-col>
+
+      <nz-col nzSpan="4">
+        <nz-form-item>
+          <nz-form-label nzRequired nzFor="district">المنطقة</nz-form-label>
+          <nz-form-control nzErrorTip="الحقل المنطقة مطلوب">
+            <nz-select
+              nzShowSearch
+              nzPlaceHolder="المنطقة"
+              nzNotFoundContent="لايوجد بيانات"
+              formControlName="district"
+            >
+              <nz-option
+                *ngFor="let option of districts"
+                [nzLabel]="option.name"
+                [nzValue]="option.id"
+                id="district"
+              ></nz-option>
+            </nz-select>
+          </nz-form-control>
+        </nz-form-item>
+      </nz-col>
+      <nz-col nzSpan="4">
+        <nz-form-item>
+          <nz-form-label nzRequired nzFor="status">حالة المجلس</nz-form-label>
+          <nz-form-control>
+            <nz-switch formControlName="status" id="status"></nz-switch>
+          </nz-form-control>
+        </nz-form-item>
+      </nz-col>
+      <nz-col>
+        <button nz-button type="button" nzDanger (click)="reset()">
+          <span nz-icon nzType="undo" nzTheme="outline"></span>
+          إعادة تعين
+        </button>
+      </nz-col>
+      <nz-col>
+        <button nz-button type="submit" nzType="primary">
+          <span nz-icon nzType="search" nzTheme="outline"></span>
+          بحث
+        </button>
+      </nz-col>
+    </nz-row>
+  </form>
+</nz-card>

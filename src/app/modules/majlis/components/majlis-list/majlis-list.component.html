@@ -4,7 +4,13 @@
 
     <h2>قائمة المجالس</h2>
 
-    <nz-row nzType="flex" nzJustify="start" nzGutter="10">
+    <nz-row nzType="flex" nzJustify="start">
+      <nz-col nzSpan="24">
+        <app-filters (onFilter)="search($event)" (onReset)="resetFilters()"></app-filters>
+      </nz-col>
+    </nz-row>
+
+    <nz-row nzType="flex" nzJustify="start" nzGutter="10" style="margin-top:20px">
       <nz-col [nzXs]="24" [nzSm]="24" [nzMd]="12" [nzLg]="8" *ngFor="let item of displayItems">
         <nz-card>
           <figure>
@@ -78,7 +84,7 @@
         ></nz-pagination>
       </nz-col>
     </nz-row>
-    <nz-row nzType="flex" nzJustify="center" *ngIf="!items.length">
+    <nz-row nzType="flex" nzJustify="center" *ngIf="!displayItems.length">
       <nz-col>
         <nz-empty nzNotFoundContent="لا يوجد بيانات"></nz-empty>
       </nz-col>
