@@ -32,7 +32,7 @@ export class DashboardComponent implements OnChanges {
   shapeData(items: IMajlisForm[]) {
     const cities: IStatistic[] = [];
     const districts: IStatistic[] = [];
-
+    const coloring = { backgroundColor: CHART_COLORS, hoverBackgroundColor: HOVER_CHART_COLORS };
     items.map((item: IMajlisForm) => {
       const city = this.lookupItemPipe.transform(item.city, CITIES);
       const district = this.lookupItemPipe.transform(item.district, DISTRICTS);
@@ -43,12 +43,8 @@ export class DashboardComponent implements OnChanges {
     const citiesNumbers = cities.map(city => city.total);
     const districtsNumbers = districts.map(district => district.total);
 
-    this.citiesData = [
-      { data: citiesNumbers, backgroundColor: CHART_COLORS, hoverBackgroundColor: HOVER_CHART_COLORS }
-    ];
-    this.districtsData = [
-      { data: districtsNumbers, backgroundColor: CHART_COLORS, hoverBackgroundColor: HOVER_CHART_COLORS }
-    ];
+    this.citiesData = [{ data: citiesNumbers, ...coloring }];
+    this.districtsData = [{ data: districtsNumbers, ...coloring }];
 
     this.citiesLabels = cities.map(city => city.name);
     this.districtsLabels = districts.map(district => district.name);
