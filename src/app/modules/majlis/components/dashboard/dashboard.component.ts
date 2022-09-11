@@ -1,9 +1,10 @@
-import { Component, Input, OnChanges, OnInit } from '@angular/core';
-import { ILookupItem, IMajlisForm } from '../majlis-form/types';
+import { Component, Input, OnChanges } from '@angular/core';
+import { IMajlisForm } from '../majlis-form/types';
 import { ChartOptions } from 'chart.js';
 import { LookupItemPipe } from 'app/pipes/lookup-item.pipe';
 import { CITIES, DISTRICTS } from '../majlis-form/config';
-import { IStatistic } from './types';
+import { IDataSetItem, IStatistic } from './types';
+import { CHART_COLORS, HOVER_CHART_COLORS } from './config';
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
@@ -11,11 +12,11 @@ import { IStatistic } from './types';
 })
 export class DashboardComponent implements OnChanges {
   @Input() items: IMajlisForm[] = [];
-
+  readonly CHART_COLORS = CHART_COLORS;
   citiesLabels: string[] = [];
   districtsLabels: string[] = [];
-  citiesData: { data: number[] }[] = [];
-  districtsData: { data: number[] }[] = [];
+  citiesData: IDataSetItem[] = [];
+  districtsData: IDataSetItem[] = [];
   pieChartLegend = true;
   pieChartPlugins = [];
   pieChartOptions: ChartOptions<'pie'> = {
@@ -42,8 +43,12 @@ export class DashboardComponent implements OnChanges {
     const citiesNumbers = cities.map(city => city.total);
     const districtsNumbers = districts.map(district => district.total);
 
-    this.citiesData = [{ data: citiesNumbers }];
-    this.districtsData = [{ data: districtsNumbers }];
+    this.citiesData = [
+      { data: citiesNumbers, backgroundColor: CHART_COLORS, hoverBackgroundColor: HOVER_CHART_COLORS }
+    ];
+    this.districtsData = [
+      { data: districtsNumbers, backgroundColor: CHART_COLORS, hoverBackgroundColor: HOVER_CHART_COLORS }
+    ];
 
     this.citiesLabels = cities.map(city => city.name);
     this.districtsLabels = districts.map(district => district.name);
